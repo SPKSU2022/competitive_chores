@@ -1,0 +1,20 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-competativechores-dev-181629-authRole",
+      "UnauthRoleArn": "arn:aws:iam::270026247073:role/amplify-competativechores-dev-181629-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::270026247073:role/amplify-competativechores-dev-181629-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-competativechores-dev-181629-deployment",
+      "UnauthRoleName": "amplify-competativechores-dev-181629-unauthRole",
+      "StackName": "amplify-competativechores-dev-181629",
+      "StackId": "arn:aws:cloudformation:us-east-1:270026247073:stack/amplify-competativechores-dev-181629/dde19230-66cd-11ed-9745-1216fa73ee63",
+      "AmplifyAppId": "d277oawanmsmbf"
+    },
+    "categories": {
+      "auth": {
+        "competativechoresb256994e": {}
+      }
+    }
+  }
+}
