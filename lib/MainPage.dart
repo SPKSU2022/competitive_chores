@@ -1,7 +1,3 @@
-import 'package:amplify_authenticator/amplify_authenticator.dart';
-import 'package:amplify_flutter/amplify_flutter.dart';
-import 'package:competative_chores/Amplify.dart';
-import 'package:competative_chores/Classes/Chores.dart';
 import 'package:competative_chores/Classes/Formatting.dart';
 import 'package:competative_chores/Classes/User.dart';
 import 'package:competative_chores/Screens/BackgroundAnimation.dart';

@@ -55,6 +55,12 @@ class _MyAppState extends State<MyApp> {
       ),
       child: MaterialApp(
           theme: ThemeData(
+              checkboxTheme: CheckboxThemeData(
+                  fillColor: MaterialStateProperty.resolveWith((states) => Formatting.bannerRed),
+                  shape: RoundedRectangleBorder(
+                    side: BorderSide(width: 2, style: BorderStyle.solid, color: Formatting.bannerRed),
+                    borderRadius: BorderRadius.circular(5),
+                  )),
               inputDecorationTheme: InputDecorationTheme(
                 floatingLabelStyle: TextStyle(color: Formatting.textColor),
                 labelStyle: TextStyle(color: Formatting.textColor.withAlpha(150)),
