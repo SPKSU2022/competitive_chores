@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:competative_chores/Classes/Chores.dart';
 import 'package:competative_chores/Classes/Families.dart';
 import 'package:competative_chores/Classes/Formatting.dart';
+import 'package:competative_chores/Classes/Scorecards.dart';
 import 'package:competative_chores/Classes/User.dart';
 import 'package:competative_chores/Services/Database.dart';
 import 'package:flutter/material.dart';
@@ -18,12 +19,8 @@ class ChoreList extends StatefulWidget {
 class _ChoreListState extends State<ChoreList> {
   bool sortPoints = true;
   bool sortAsc = true;
-  int sortColumnIndex = 2;
+  int sortColumnIndex = 0;
   TextEditingController descriptionViewer = TextEditingController();
-  TextEditingController titleCreator = TextEditingController();
-  TextEditingController descriptionCreator = TextEditingController();
-  TextEditingController pointsCreator = TextEditingController();
-  TextEditingController priorityCreator = TextEditingController();
 
   @override
   initState() {
@@ -32,220 +29,123 @@ class _ChoreListState extends State<ChoreList> {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceAround,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Expanded(
-          child: Container(
-            margin: const EdgeInsets.all(8.0),
-            decoration: BoxDecoration(borderRadius: BorderRadius.circular(5)),
-            child: SingleChildScrollView(
-              child: DataTable(
-                sortColumnIndex: 2,
-                sortAscending: false,
-                showCheckboxColumn: false,
-                decoration: BoxDecoration(color: Formatting.bannerRed),
-                columns: [
-                  DataColumn(
-                      label: Text(
-                    'Title',
-                    style: TextStyle(color: Formatting.creame),
-                  )),
-                  DataColumn(
-                      label: Text(
-                    'Priority',
-                    style: TextStyle(color: Formatting.creame),
-                  )),
-                  DataColumn(
-                      onSort: (columnIndex, _) {
-                        setState(() {
-                          sortColumnIndex = columnIndex;
-                          if (sortAsc == true) {
-                            sortAsc = false;
-                            Chores.chores.sort((a, b) => a[4].compareTo(b[4]));
-                          } else {
-                            sortAsc = true;
-                            Chores.chores.sort((a, b) => b[4].compareTo(a[4]));
-                          }
-                        });
-                      },
-                      label: Text(
-                        'Points',
-                        style: TextStyle(color: Formatting.creame),
+    return ValueListenableBuilder(
+      builder: (context, value, child) {
+        return Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Expanded(
+              child: Container(
+                margin: const EdgeInsets.all(8.0),
+                decoration: BoxDecoration(borderRadius: BorderRadius.circular(5)),
+                child: SingleChildScrollView(
+                  child: DataTable(
+                    sortColumnIndex: sortColumnIndex,
+                    sortAscending: false,
+                    showCheckboxColumn: false,
+                    decoration: BoxDecoration(color: Formatting.bannerBlue),
+                    columns: [
+                      DataColumn(
+                          label: Text(
+                        'Title',
+                        style: TextStyle(color: Formatting.creame, fontWeight: FontWeight.bold),
                       )),
-                ],
-                rows: List.generate(Chores.chores.length, (index) => getData(Chores.chores, index)),
-              ),
-            ),
-          ),
-        ),
-        Expanded(
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Theme(
-              data: Theme.of(context).copyWith(
-                colorScheme: ColorScheme(
-                    brightness: Brightness.light,
-                    primary: Formatting.lighterRed,
-                    onPrimary: Color.fromARGB(255, 255, 212, 212),
-                    secondary: Formatting.bannerBlue,
-                    onSecondary: Colors.green,
-                    error: Colors.blue,
-                    onError: Colors.amber,
-                    background: Colors.yellow,
-                    onBackground: Colors.purple,
-                    surface: Formatting.bannerBlue,
-                    onSurface: Color.fromARGB(255, 190, 38, 58)),
-                inputDecorationTheme: InputDecorationTheme(
-                  fillColor: Formatting.bannerRed,
-                  floatingLabelStyle: TextStyle(color: Formatting.creame),
-                  labelStyle: TextStyle(color: Formatting.creame.withAlpha(150)),
-                  counterStyle: TextStyle(color: Formatting.textColor.withAlpha(150)),
-                  errorStyle: const TextStyle(color: Colors.red),
-                  hoverColor: Formatting.lighterRed.withAlpha(50),
-                  iconColor: Formatting.lighterRed,
-                  contentPadding: const EdgeInsets.all(16),
-                  floatingLabelBehavior: FloatingLabelBehavior.auto,
-                  filled: true,
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
-                    borderSide: BorderSide(color: Formatting.lighterRed),
-                  ),
-                  disabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
-                    borderSide: BorderSide(color: Formatting.lighterRed),
-                  ),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
-                    borderSide: BorderSide(style: BorderStyle.solid, color: Formatting.lighterRed),
+                      DataColumn(
+                          label: Text(
+                        'Priority',
+                        style: TextStyle(color: Formatting.creame, fontWeight: FontWeight.bold),
+                      )),
+                      DataColumn(
+                          onSort: (columnIndex, _) {
+                            setState(() {
+                              sortColumnIndex = columnIndex;
+                              if (sortAsc == true) {
+                                sortAsc = false;
+                                Chores.chores.sort((a, b) => a[4].compareTo(b[4]));
+                              } else {
+                                sortAsc = true;
+                                Chores.chores.sort((a, b) => b[4].compareTo(a[4]));
+                              }
+                            });
+                          },
+                          label: Text(
+                            'Points',
+                            style: TextStyle(color: Formatting.creame, fontWeight: FontWeight.bold),
+                          )),
+                      DataColumn(
+                          label: Text(
+                        'Date Assigned',
+                        style: TextStyle(color: Formatting.creame, fontWeight: FontWeight.bold),
+                      )),
+                      DataColumn(
+                        label: Text(
+                          'Status',
+                          style: TextStyle(color: Formatting.creame, fontWeight: FontWeight.bold),
+                        ),
+                        onSort: (columnIndex, _) {
+                          setState(() {
+                            sortColumnIndex = columnIndex;
+                            if (sortAsc == false) {
+                              sortAsc = true;
+                              Chores.chores.sort(
+                                (a, b) {
+                                  if (a[9] == null && b[9] == null) {
+                                    return 0;
+                                  } else if (a[9] == null && b[9] != null) {
+                                    return -1;
+                                  } else if (a[9] != null && b[9] == null) {
+                                    return 1;
+                                  } else {
+                                    return 0;
+                                  }
+                                },
+                              );
+                            } else {
+                              sortAsc = false;
+                              Chores.chores.sort((a, b) {
+                                if (b[9] == null && a[9] == null) {
+                                  return 0;
+                                } else if (b[9] == null && a[9] != null) {
+                                  return -1;
+                                } else if (b[9] != null && a[9] == null) {
+                                  return 1;
+                                } else {
+                                  return 0;
+                                }
+                              });
+                            }
+                          });
+                        },
+                      ),
+                    ],
+                    rows: List.generate(Chores.chores.length, (index) => getData(Chores.chores, index)),
                   ),
                 ),
               ),
-              child: Column(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(5, 5, 5, 5),
-                    child: TextFormField(
-                      controller: titleCreator,
-                      decoration: const InputDecoration(labelText: 'Title'),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(5, 5, 5, 5),
-                    child: TextFormField(
-                      inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                      controller: pointsCreator,
-                      decoration: const InputDecoration(labelText: 'Points'),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(5, 5, 5, 5),
-                    child: TextFormField(
-                      controller: priorityCreator,
-                      decoration: const InputDecoration(labelText: 'Priority'),
-                    ),
-                  ),
-                  Expanded(
-                    child: Container(
-                      margin: EdgeInsets.all(5),
-                      child: TextField(
-                        controller: descriptionCreator,
-                        decoration: const InputDecoration(
-                          labelText: 'Description',
-                          helperMaxLines: 250,
-                        ),
-                        keyboardType: TextInputType.multiline,
-                        maxLines: null,
-                        maxLength: 250,
-                      ),
-                    ),
-                  ),
-                  ElevatedButton(
-                      style: ButtonStyle(
-                        backgroundColor: MaterialStateProperty.all(Formatting.bannerRed),
-                      ),
-                      onPressed: () {
-                        if (titleCreator.text.isEmpty || pointsCreator.text.isEmpty || priorityCreator.text.isEmpty || descriptionCreator.text.isEmpty) {
-                          showDialog(
-                            context: context,
-                            builder: (context) {
-                              return AlertDialog(
-                                backgroundColor: Formatting.bannerRed,
-                                title: Text(
-                                  'Error!',
-                                  style: TextStyle(color: Formatting.creame),
-                                ),
-                                content: Text('Please make sure every field is filled!'),
-                                actions: [
-                                  Row(
-                                    children: [
-                                      Expanded(
-                                        child: Padding(
-                                          padding: const EdgeInsets.all(8.0),
-                                          child: ElevatedButton(
-                                              onPressed: () {
-                                                Navigator.pop(context);
-                                              },
-                                              child: Text(
-                                                'OK',
-                                                style: TextStyle(color: Formatting.creame),
-                                              )),
-                                        ),
-                                      ),
-                                    ],
-                                  )
-                                ],
-                              );
-                            },
-                          );
-                        } else {
-                          insertChore(int.parse(User.userAttributes[0]), titleCreator.text, int.parse(pointsCreator.text), priorityCreator.text,
-                                  descriptionCreator.text)
-                              .then((value) {
-                            getChores(int.parse(User.userAttributes[0])).then((value) {
-                              Timer(
-                                Duration(milliseconds: 50),
-                                () {
-                                  setState(() {
-                                    titleCreator.text = '';
-                                    pointsCreator.text = '';
-                                    priorityCreator.text = '';
-                                    descriptionCreator.text = '';
-                                    Chores.chores.sort(
-                                      (a, b) {
-                                        return b[4].compareTo(a[4]);
-                                      },
-                                    );
-                                  });
-                                },
-                              );
-                            });
-                          });
-                        }
-                      },
-                      child: Text(
-                        'Create Chore',
-                        style: TextStyle(color: Formatting.creame),
-                      ))
-                ],
-              ),
             ),
-          ),
-        )
-      ],
+          ],
+        );
+      },
+      valueListenable: Chores.choreNotifier,
     );
   }
 
   DataRow getData(List chores, index) {
+    bool complete = true;
+    if (Chores.chores[index][9] == null) {
+      complete = false;
+    }
     DataRow result = DataRow(
         cells: <DataCell>[
           DataCell(Text(Chores.chores[index][2], style: TextStyle(color: Formatting.creame))),
           DataCell(Text(Chores.chores[index][5], style: TextStyle(color: Formatting.creame))),
           DataCell(Text(Chores.chores[index][4].toString(), style: TextStyle(color: Formatting.creame))),
+          DataCell(Text(Chores.chores[index][6].toString(), style: TextStyle(color: Formatting.creame))),
+          DataCell(Text(complete.toString(), style: TextStyle(color: Formatting.creame))),
         ],
         color: MaterialStateColor.resolveWith((states) {
-          return Formatting.bannerRed;
+          return Formatting.bannerBlue;
         }),
         onSelectChanged: (val) {
           descriptionViewer.text = Chores.chores[index][3];
@@ -268,38 +168,65 @@ class _ChoreListState extends State<ChoreList> {
                     ),
                   ]),
                   actions: [
-                    Row(
-                      children: [
-                        Expanded(
-                          child: Padding(
-                            padding: const EdgeInsets.all(5),
-                            child: ElevatedButton(
-                                onPressed: () {
-                                  Navigator.pop(context);
-                                },
-                                child: Text(
-                                  'OK',
-                                  style: TextStyle(color: Formatting.creame),
-                                )),
-                          ),
-                        ),
-                        Expanded(
-                          child: Padding(
-                            padding: const EdgeInsets.all(5),
-                            child: ElevatedButton(
-                              child: Text(
-                                'Complete',
-                                style: TextStyle(color: Formatting.creame),
+                    Builder(builder: (context) {
+                      if (complete == false) {
+                        return Row(
+                          children: [
+                            Expanded(
+                              child: Padding(
+                                padding: const EdgeInsets.all(5),
+                                child: ElevatedButton(
+                                    onPressed: () {
+                                      Navigator.pop(context);
+                                    },
+                                    child: Text(
+                                      'OK',
+                                      style: TextStyle(color: Formatting.creame),
+                                    )),
                               ),
-                              onPressed: () {
-                                debugPrint('call completion');
-                                Navigator.pop(context);
-                              },
+                            ),
+                            Expanded(
+                              child: Padding(
+                                padding: const EdgeInsets.all(5),
+                                child: ElevatedButton(
+                                  child: Text(
+                                    'Complete',
+                                    style: TextStyle(color: Formatting.creame),
+                                  ),
+                                  onPressed: () async {
+                                    await completeChore(Chores.chores[index][0], Chores.chores[index][4]).then((value) async {
+                                      await getChores(int.parse(User.userAttributes[0])).then((value) async {
+                                        await getScorecards(int.parse(User.userAttributes[0])).then((value) {
+                                          setState(() {});
+                                          ScoreCards.scorecardNotifier.notifyListeners();
+                                        });
+                                      });
+                                    });
+                                    Navigator.pop(context);
+                                  },
+                                ),
+                              ),
+                            ),
+                          ],
+                        );
+                      } else {
+                        return Row(children: [
+                          Expanded(
+                            child: Padding(
+                              padding: const EdgeInsets.all(5),
+                              child: ElevatedButton(
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                  },
+                                  child: Text(
+                                    'OK',
+                                    style: TextStyle(color: Formatting.creame),
+                                  )),
                             ),
                           ),
-                        ),
-                      ],
-                    )
+                        ]);
+                      }
+                    })
                   ],
                 );
               });

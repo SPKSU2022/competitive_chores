@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:amplify_auth_cognito/amplify_auth_cognito.dart';
 import 'package:amplify_flutter/amplify_flutter.dart';
 import 'package:competative_chores/Classes/Families.dart';
+import 'package:competative_chores/Classes/Scorecards.dart';
 import 'package:competative_chores/Classes/User.dart';
 import 'package:flutter/cupertino.dart';
 
@@ -45,6 +46,8 @@ class Amp {
       await Amplify.Auth.signOut();
       User.currentUser.clear();
       User.userAttributes.clear();
+      ScoreCards.totalAwardedScore = 0;
+      ScoreCards.totalPossibleScore = 0;
     } on AuthException catch (e) {
       print(e.message);
     }

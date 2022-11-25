@@ -1,13 +1,11 @@
-import 'dart:async';
+// ignore_for_file: file_names
 
-import 'package:amplify_authenticator/amplify_authenticator.dart';
 import 'package:competative_chores/Amplify.dart';
 import 'package:competative_chores/Classes/Families.dart';
 import 'package:competative_chores/Classes/Formatting.dart';
 import 'package:competative_chores/Classes/User.dart';
 import 'package:competative_chores/MainPage.dart';
 import 'package:competative_chores/Screens/FamilyChecker.dart';
-import 'package:competative_chores/Services/Database.dart';
 import 'package:competative_chores/Services/Initializer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -33,10 +31,10 @@ class _LoginRootState extends State<LoginRoot> {
                 if (User.userAttributes.isEmpty) {
                   return FamilyChecker();
                 } else if (Families.allFamilyIDs.contains(int.parse(User.userAttributes[0]))) {
-                  return MainPage();
+                  return const MainPage();
                 } else {
                   return ElevatedButton(
-                    child: Text('Sign Out'),
+                    child: const Text('Sign Out'),
                     onPressed: () {
                       Amp.signOutCurrentUser();
                     },
