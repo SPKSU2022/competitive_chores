@@ -48,11 +48,10 @@ class Amp {
       User.userAttributes.clear();
       ScoreCards.totalAwardedScore = 0;
       ScoreCards.totalPossibleScore = 0;
-    } on AuthException catch (e) {
-      print(e.message);
-    }
+    } on AuthException catch (e) {}
+  }
+
+  static Future<void> leaveFamily() async {
+    await Amplify.Auth.updateUserAttribute(userAttributeKey: CognitoUserAttributeKey.custom('familyid'), value: '0').then((value) => signOutCurrentUser());
   }
 }
-
-
-//Amplify.Auth.updateUserAttribute(userAttributeKey: CognitoUserAttributeKey.custom('name'), value: value)

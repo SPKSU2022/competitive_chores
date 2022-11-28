@@ -60,7 +60,7 @@ class _ScoreboardState extends State<Scoreboard> {
                           Align(
                             alignment: Alignment.centerLeft,
                             child: Text(
-                              'Accumulated Points: ${ScoreCards.scorecards[index][3]}',
+                              'Accumulated Points: ${ScoreCards.scorecards[index][3]}, Total Chores Completed: ${ScoreCards.scorecards[index][4]}',
                               style: TextStyle(color: Formatting.creame, fontWeight: FontWeight.bold),
                             ),
                           ),
@@ -85,35 +85,322 @@ class _ScoreboardState extends State<Scoreboard> {
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
                         Expanded(
-                          child: Column(
-                            children: [
-                              Align(
-                                alignment: Alignment.centerLeft,
-                                child: Padding(
+                          child: SingleChildScrollView(
+                            child: Column(
+                              children: [
+                                Padding(
                                   padding: const EdgeInsets.all(5.0),
                                   child: Text(
-                                    'Current Standings:',
-                                    style: TextStyle(color: Formatting.creame, fontWeight: FontWeight.bold),
+                                    'Current Standings',
+                                    style: TextStyle(
+                                      color: Formatting.creame,
+                                      decoration: TextDecoration.underline,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 20,
+                                    ),
                                   ),
                                 ),
-                              ),
-                              ElevatedButton(
-                                  onPressed: () {
-                                    Amp.signOutCurrentUser();
-                                  },
-                                  child: Text('Sign Out'))
-                            ],
+                                Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(5.0),
+                                    child: Text(
+                                      'Current Possible Points: ${ScoreCards.totalPossibleScore}',
+                                      style: TextStyle(
+                                        color: Formatting.creame,
+                                        // decoration: TextDecoration.underline,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 15,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(5.0),
+                                    child: Text(
+                                      'Total Awarded Points: ${ScoreCards.totalAwardedScore}',
+                                      style: TextStyle(
+                                        color: Formatting.creame,
+                                        // decoration: TextDecoration.underline,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 15,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(5.0),
+                                    child: Text(
+                                      '1st:',
+                                      style: TextStyle(
+                                        color: Formatting.creame,
+                                        decoration: TextDecoration.underline,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 20,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: Padding(
+                                    padding: const EdgeInsets.fromLTRB(5, 0, 5, 5),
+                                    child: Builder(builder: (context) {
+                                      int highest = 0;
+                                      int points = 0;
+                                      for (int i = 0; i < ScoreCards.scorecards.length; i++) {
+                                        if (i == 0) {
+                                          points = ScoreCards.scorecards[i][3];
+                                          highest = i;
+                                        } else if (points < ScoreCards.scorecards[i][3]) {
+                                          points = ScoreCards.scorecards[i][3];
+                                          highest = i;
+                                        }
+                                      }
+                                      return Text(
+                                        '${ScoreCards.scorecards[highest][2]} - ${ScoreCards.scorecards[highest][3]} Points!',
+                                        style: TextStyle(
+                                          color: Formatting.creame,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 15,
+                                        ),
+                                      );
+                                    }),
+                                  ),
+                                ),
+                                Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(5.0),
+                                    child: Text(
+                                      '2nd:',
+                                      style: TextStyle(
+                                        color: Formatting.creame,
+                                        decoration: TextDecoration.underline,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 20,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: Padding(
+                                    padding: const EdgeInsets.fromLTRB(5, 0, 5, 5),
+                                    child: Builder(builder: (context) {
+                                      if (ScoreCards.scorecards.length < 2) {
+                                        return Text(
+                                          '*Empty*',
+                                          style: TextStyle(
+                                            color: Formatting.creame,
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 15,
+                                          ),
+                                        );
+                                      }
+                                      int highest = 0;
+                                      int second = 0;
+                                      int points = 0;
+                                      for (int i = 0; i < ScoreCards.scorecards.length; i++) {
+                                        if (i == 0) {
+                                          points = ScoreCards.scorecards[i][3];
+                                          highest = i;
+                                          second = i;
+                                        } else if (points < ScoreCards.scorecards[i][3]) {
+                                          points = ScoreCards.scorecards[i][3];
+                                          second = highest;
+                                          highest = i;
+                                        }
+                                      }
+                                      return Text(
+                                        '${ScoreCards.scorecards[second][2]} - ${ScoreCards.scorecards[second][3]} Points!',
+                                        style: TextStyle(
+                                          color: Formatting.creame,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 15,
+                                        ),
+                                      );
+                                    }),
+                                  ),
+                                ),
+                                Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(5.0),
+                                    child: Text(
+                                      '3rd:',
+                                      style: TextStyle(
+                                        color: Formatting.creame,
+                                        decoration: TextDecoration.underline,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 20,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: Padding(
+                                    padding: const EdgeInsets.fromLTRB(5, 0, 5, 5),
+                                    child: Builder(builder: (context) {
+                                      if (ScoreCards.scorecards.length < 3) {
+                                        return Text(
+                                          '*Empty*',
+                                          style: TextStyle(
+                                            color: Formatting.creame,
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 15,
+                                          ),
+                                        );
+                                      }
+
+                                      int highest = 0;
+                                      int second = 0;
+                                      int third = 0;
+                                      int points = 0;
+                                      for (int i = 0; i < ScoreCards.scorecards.length; i++) {
+                                        if (i == 0) {
+                                          points = ScoreCards.scorecards[i][3];
+                                          highest = i;
+                                          second = i;
+                                          third = i;
+                                        } else if (points < ScoreCards.scorecards[i][3]) {
+                                          points = ScoreCards.scorecards[i][3];
+                                          third = second;
+                                          second = highest;
+                                          highest = i;
+                                        }
+
+                                        if (i + 1 == ScoreCards.scorecards.length) {
+                                          if ((third == second || third == highest) && ScoreCards.scorecards.length >= 3) {
+                                            third = 0;
+                                            while (third == second || third == highest) {
+                                              third++;
+                                            }
+                                          }
+                                        }
+                                      }
+
+                                      return Text(
+                                        '${ScoreCards.scorecards[third][2]} - ${ScoreCards.scorecards[third][3]} Points!',
+                                        style: TextStyle(
+                                          color: Formatting.creame,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 15,
+                                        ),
+                                      );
+                                    }),
+                                  ),
+                                ),
+                                const SizedBox(
+                                  height: 10,
+                                ),
+                                Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(5.0),
+                                    child: Text(
+                                      'Most Chores Completed:',
+                                      style: TextStyle(
+                                        color: Formatting.creame,
+                                        decoration: TextDecoration.underline,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 20,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: Padding(
+                                    padding: const EdgeInsets.fromLTRB(5, 0, 5, 5),
+                                    child: Builder(builder: (context) {
+                                      int highest = 0;
+                                      int chores = 0;
+                                      for (int i = 0; i < ScoreCards.scorecards.length; i++) {
+                                        if (i == 0) {
+                                          chores = ScoreCards.scorecards[i][4];
+                                          highest = i;
+                                        } else if (chores < ScoreCards.scorecards[i][4]) {
+                                          chores = ScoreCards.scorecards[i][4];
+                                          highest = i;
+                                        }
+                                      }
+                                      return Text(
+                                        '${ScoreCards.scorecards[highest][2]} - ${ScoreCards.scorecards[highest][4]} Chores!',
+                                        style: TextStyle(
+                                          color: Formatting.creame,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 15,
+                                        ),
+                                      );
+                                    }),
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                         Expanded(
                           child: Column(
                             children: [
-                              Text('Current Standings:'),
+                              Text(
+                                'Settings',
+                                style: TextStyle(
+                                  color: Formatting.creame,
+                                  decoration: TextDecoration.underline,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 20,
+                                ),
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.all(5.0),
+                                    child: Text(
+                                      'Family #: ${User.userAttributes[0]}',
+                                      style: TextStyle(
+                                        color: Formatting.creame,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 15,
+                                      ),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.all(5.0),
+                                    child: ElevatedButton(
+                                        onPressed: () {
+                                          Amp.leaveFamily();
+                                        },
+                                        child: Text('Leave Family')),
+                                  )
+                                ],
+                              ),
+                              Align(
+                                alignment: Alignment.centerLeft,
+                                child: Padding(
+                                  padding: const EdgeInsets.all(5.0),
+                                  child: Text(
+                                    'Family Name: "${User.userAttributes[1]}"',
+                                    style: TextStyle(
+                                      color: Formatting.creame,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 15,
+                                    ),
+                                  ),
+                                ),
+                              ),
                               ElevatedButton(
-                                  onPressed: () {
-                                    Amp.signOutCurrentUser();
-                                  },
-                                  child: Text('Sign Out'))
+                                onPressed: () {
+                                  Amp.signOutCurrentUser();
+                                },
+                                child: Text('Sign Out'),
+                              )
                             ],
                           ),
                         ),

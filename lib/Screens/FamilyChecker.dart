@@ -1,6 +1,7 @@
 import 'package:amplify_auth_cognito/amplify_auth_cognito.dart';
 import 'package:amplify_authenticator/amplify_authenticator.dart';
 import 'package:amplify_flutter/amplify_flutter.dart';
+import 'package:competative_chores/Amplify.dart';
 import 'package:competative_chores/Classes/Families.dart';
 import 'package:competative_chores/Classes/Formatting.dart';
 import 'package:competative_chores/MainPage.dart';
@@ -93,13 +94,21 @@ class _FamilyCheckerState extends State<FamilyChecker> {
                         ),
                         ElevatedButton(
                           child: const Text('Join Family'),
-                          onPressed: () {
-                            getFamilies().then((value) {
+                          onPressed: () async {
+                            await getFamilies().then((value) async {
                               validateAndSave(joinerKey);
                               if (joinerKey.currentState!.validate()) {
-                                Amplify.Auth.updateUserAttribute(userAttributeKey: CognitoUserAttributeKey.custom("custom:familyid"), value: familyID.text);
-                                Amplify.Auth.updateUserAttribute(userAttributeKey: CognitoUserAttributeKey.custom("custom:familyName"), value: familyName.text);
-                                Navigator.push(context, MaterialPageRoute(builder: ((context) => MainPage())));
+                                await Amplify.Auth.updateUserAttribute(
+                                        userAttributeKey: CognitoUserAttributeKey.custom("custom:familyid"), value: familyID.text)
+                                    .then((value) async {
+                                  await Amplify.Auth.updateUserAttribute(
+                                          userAttributeKey: CognitoUserAttributeKey.custom("custom:familyName"), value: familyName.text)
+                                      .then((value) async {
+                                    await Amp.getCurrentUser().then((value) {}).then((value) {
+                                      Navigator.push(context, MaterialPageRoute(builder: ((context) => Material(child: MainPage()))));
+                                    });
+                                  });
+                                });
                               }
                             });
                           },

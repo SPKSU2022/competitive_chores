@@ -33,12 +33,7 @@ class _LoginRootState extends State<LoginRoot> {
                 } else if (Families.allFamilyIDs.contains(int.parse(User.userAttributes[0]))) {
                   return const MainPage();
                 } else {
-                  return ElevatedButton(
-                    child: const Text('Sign Out'),
-                    onPressed: () {
-                      Amp.signOutCurrentUser();
-                    },
-                  );
+                  return FamilyChecker();
                 }
               } else {
                 return Center(

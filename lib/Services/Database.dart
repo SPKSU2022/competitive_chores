@@ -85,7 +85,7 @@ Future<void> insertScorecard(int familyID) async {
   ));
 
   String user = User.currentUser[0];
-
+  debugPrint('${familyID}');
   await conn.query('insert into scoreboard(familyID, name, totalPoints, choresCompleted) values($familyID, \'$user\', 0, 0);');
   var result = await conn.query('Select* from scoreboard where familyID=$familyID');
   List<dynamic> holder = result.toList();
