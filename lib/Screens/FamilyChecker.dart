@@ -1,12 +1,9 @@
-import 'package:amplify_auth_cognito/amplify_auth_cognito.dart';
-import 'package:amplify_authenticator/amplify_authenticator.dart';
 import 'package:amplify_flutter/amplify_flutter.dart';
 import 'package:competative_chores/Amplify.dart';
 import 'package:competative_chores/Classes/Families.dart';
 import 'package:competative_chores/Classes/Formatting.dart';
 import 'package:competative_chores/MainPage.dart';
-import 'package:competative_chores/Services/Database.dart';
-import 'package:competative_chores/main.dart';
+import 'package:competative_chores/Services/APICalls.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -95,7 +92,7 @@ class _FamilyCheckerState extends State<FamilyChecker> {
                         ElevatedButton(
                           child: const Text('Join Family'),
                           onPressed: () async {
-                            await getFamilies().then((value) async {
+                            await getAllFamilies().then((value) async {
                               validateAndSave(joinerKey);
                               if (joinerKey.currentState!.validate()) {
                                 await Amplify.Auth.updateUserAttribute(
@@ -135,12 +132,12 @@ class _FamilyCheckerState extends State<FamilyChecker> {
                         ElevatedButton(
                           child: const Text('Create & Join Family'),
                           onPressed: () {
-                            getFamilies().then(
+                            getAllFamilies().then(
                               (value) {
                                 validateAndSave(creatorKey);
                                 if (creatorKey.currentState!.validate()) {
-                                  createFamily(familyCreator.text).then((value) {
-                                    getFamilies().then((value) {
+                                  insertFamily(familyCreator.text).then((value) {
+                                    getAllFamilies().then((value) {
                                       String ID = '';
                                       for (int i = 0; i < Families.allFamilies.length; i++) {
                                         if (Families.allFamilies[i][1].toString() == familyCreator.text) {

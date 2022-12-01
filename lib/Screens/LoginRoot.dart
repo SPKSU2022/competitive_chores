@@ -1,6 +1,4 @@
 // ignore_for_file: file_names
-
-import 'package:competative_chores/Amplify.dart';
 import 'package:competative_chores/Classes/Families.dart';
 import 'package:competative_chores/Classes/Formatting.dart';
 import 'package:competative_chores/Classes/User.dart';

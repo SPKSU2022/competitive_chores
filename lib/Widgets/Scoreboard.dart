@@ -1,10 +1,9 @@
 import 'package:competative_chores/Amplify.dart';
 import 'package:competative_chores/Classes/Formatting.dart';
-import 'package:competative_chores/Classes/ScoreCards.dart';
+import 'package:competative_chores/Classes/Scorecards.dart';
 import 'package:competative_chores/Classes/User.dart';
-import 'package:competative_chores/Services/Database.dart';
+import 'package:competative_chores/Services/APICalls.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class Scoreboard extends StatefulWidget {
   const Scoreboard({Key? key}) : super(key: key);
@@ -394,6 +393,12 @@ class _ScoreboardState extends State<Scoreboard> {
                                     ),
                                   ),
                                 ),
+                              ),
+                              ElevatedButton(
+                                onPressed: () {
+                                  updateChore(2, 5000);
+                                },
+                                child: Text('DB Checker'),
                               ),
                               ElevatedButton(
                                 onPressed: () {

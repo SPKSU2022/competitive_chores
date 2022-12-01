@@ -1,7 +1,6 @@
 import 'package:competative_chores/Classes/Formatting.dart';
 import 'package:competative_chores/Classes/User.dart';
 import 'package:competative_chores/Screens/BackgroundAnimation.dart';
-import 'package:competative_chores/Services/Database.dart';
 import 'package:competative_chores/Services/Initializer.dart';
 import 'package:competative_chores/Widgets/ChoreCreator.dart';
 import 'package:competative_chores/Widgets/ChoreList.dart';

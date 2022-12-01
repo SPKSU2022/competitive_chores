@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:competative_chores/Classes/Chores.dart';
 import 'package:competative_chores/Classes/Formatting.dart';
 import 'package:competative_chores/Classes/User.dart';
-import 'package:competative_chores/Services/Database.dart';
+import 'package:competative_chores/Services/APICalls.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -150,10 +150,10 @@ class _ChoreCreatorState extends State<ChoreCreator> {
                             },
                           );
                         } else {
-                          insertChore(int.parse(User.userAttributes[0]), titleCreator.text, int.parse(pointsCreator.text), priorityCreator.text,
+                          insertNewChore(int.parse(User.userAttributes[0]), titleCreator.text, int.parse(pointsCreator.text), priorityCreator.text,
                                   descriptionCreator.text)
                               .then((value) {
-                            getChores(int.parse(User.userAttributes[0])).then((value) {
+                            getAllChores(int.parse(User.userAttributes[0])).then((value) {
                               Timer(
                                 Duration(milliseconds: 50),
                                 () {

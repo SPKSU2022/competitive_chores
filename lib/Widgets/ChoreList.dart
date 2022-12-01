@@ -1,13 +1,11 @@
 import 'dart:async';
 
 import 'package:competative_chores/Classes/Chores.dart';
-import 'package:competative_chores/Classes/Families.dart';
 import 'package:competative_chores/Classes/Formatting.dart';
 import 'package:competative_chores/Classes/Scorecards.dart';
 import 'package:competative_chores/Classes/User.dart';
-import 'package:competative_chores/Services/Database.dart';
+import 'package:competative_chores/Services/APICalls.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 class ChoreList extends StatefulWidget {
   const ChoreList({Key? key}) : super(key: key);
@@ -194,9 +192,9 @@ class _ChoreListState extends State<ChoreList> {
                                     style: TextStyle(color: Formatting.creame),
                                   ),
                                   onPressed: () async {
-                                    await completeChore(Chores.chores[index][0], Chores.chores[index][4]).then((value) async {
-                                      await getChores(int.parse(User.userAttributes[0])).then((value) async {
-                                        await getScorecards(int.parse(User.userAttributes[0])).then((value) {
+                                    await updateChore(Chores.chores[index][0], Chores.chores[index][4]).then((value) async {
+                                      await getAllChores(int.parse(User.userAttributes[0])).then((value) async {
+                                        await getAllScorecards(int.parse(User.userAttributes[0])).then((value) {
                                           setState(() {});
                                           ScoreCards.scorecardNotifier.notifyListeners();
                                         });

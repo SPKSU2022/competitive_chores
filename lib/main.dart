@@ -6,7 +6,6 @@ import 'package:competative_chores/Classes/User.dart';
 import 'package:competative_chores/MainPage.dart';
 import 'package:competative_chores/Screens/FamilyChecker.dart';
 import 'package:competative_chores/Screens/LoginRoot.dart';
-import 'package:competative_chores/Services/Database.dart';
 import 'package:competative_chores/Services/Initializer.dart';
 import 'package:flutter/material.dart';
 import 'package:amplify_flutter/amplify_flutter.dart';
