@@ -396,12 +396,6 @@ class _ScoreboardState extends State<Scoreboard> {
                               ),
                               ElevatedButton(
                                 onPressed: () {
-                                  updateChore(2, 5000);
-                                },
-                                child: Text('DB Checker'),
-                              ),
-                              ElevatedButton(
-                                onPressed: () {
                                   Amp.signOutCurrentUser();
                                 },
                                 child: Text('Sign Out'),

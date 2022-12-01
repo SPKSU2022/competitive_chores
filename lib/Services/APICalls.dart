@@ -107,4 +107,5 @@ Future<void> updateChore(int choreID, int points) async {
   url = Uri.parse(
       'https://zt3r9w8en3.execute-api.us-east-1.amazonaws.com/Production/scoreboard?totalPoints=$newScore&choresCompleted=$choresTally&scoreboardID=$scoreCard');
   response = await http.put(url);
+  ScoreCards.scorecardNotifier.notifyListeners();
 }

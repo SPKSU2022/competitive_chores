@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:amplify_auth_cognito/amplify_auth_cognito.dart';
 import 'package:amplify_flutter/amplify_flutter.dart';
+import 'package:competative_chores/Classes/Chores.dart';
 import 'package:competative_chores/Classes/Families.dart';
 import 'package:competative_chores/Classes/Scorecards.dart';
 import 'package:competative_chores/Classes/User.dart';
@@ -48,6 +49,10 @@ class Amp {
       User.userAttributes.clear();
       ScoreCards.totalAwardedScore = 0;
       ScoreCards.totalPossibleScore = 0;
+      Families.allFamilies.clear();
+      Families.allFamilyIDs.clear();
+      Families.allFamilyNames.clear();
+      Chores.chores.clear();
     } on AuthException catch (e) {}
   }
 
