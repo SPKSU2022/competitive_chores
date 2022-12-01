@@ -1,12 +1,6 @@
 import 'package:amplify_authenticator/amplify_authenticator.dart';
-import 'package:competative_chores/Amplify.dart';
-import 'package:competative_chores/Classes/Families.dart';
 import 'package:competative_chores/Classes/Formatting.dart';
-import 'package:competative_chores/Classes/User.dart';
-import 'package:competative_chores/MainPage.dart';
-import 'package:competative_chores/Screens/FamilyChecker.dart';
 import 'package:competative_chores/Screens/LoginRoot.dart';
-import 'package:competative_chores/Services/Initializer.dart';
 import 'package:flutter/material.dart';
 import 'package:amplify_flutter/amplify_flutter.dart';
 import 'package:amplify_auth_cognito/amplify_auth_cognito.dart';
