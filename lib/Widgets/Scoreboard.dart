@@ -161,7 +161,7 @@ class _ScoreboardState extends State<Scoreboard> {
                                         }
                                       }
                                       return Text(
-                                        '${ScoreCards.scorecards[highest][2]} - ${ScoreCards.scorecards[highest][3]} Points!',
+                                        '${ScoreCards.scorecards[highest][2] ?? 'Empty'} - ${ScoreCards.scorecards[highest][3] ?? '0'} Points!',
                                         style: TextStyle(
                                           color: Formatting.creame,
                                           fontWeight: FontWeight.bold,
